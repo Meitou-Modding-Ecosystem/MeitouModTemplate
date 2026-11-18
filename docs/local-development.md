@@ -34,7 +34,8 @@ $Bast      = "$Repos\BastFront"
 
 ## Prerequisites
 
-- .NET 11 SDK (each repo's `global.json` names the version), Git, Visual Studio or Rider.
+- .NET 11 SDK (each repo's `global.json` names the version) and Git.
+- An editor: Visual Studio, VS Code with the C# Dev Kit, or Rider. A terminal alone also works.
 - Kenshi installed. If it is not in `C:\Program Files (x86)\Steam\steamapps\common\Kenshi`, set the `KENSHI_PATH` environment variable
   to its folder.
 
@@ -63,8 +64,8 @@ dotnet run --project Play
 ```
 
 - The first build downloads each framework named in `meitou.lock.json` into `deps` and stops if its SHA-256 does not match.
-- `dotnet run --project Play` (or F5 on the `Play` project in Visual Studio) copies the locked frameworks and the mod into `Kenshi\mods`
-  and starts the engine.
+- `dotnet run --project Play` copies the locked frameworks and the mod into `Kenshi\mods` and starts the engine. Visual Studio, VS Code
+  and the installed launcher: [play.md](play.md).
 - Enable the frameworks above the mod in the launcher, as for any dependency.
 
 ## Change a framework and a mod together
@@ -72,24 +73,23 @@ dotnet run --project Play
 Point the mod repo at your framework clone:
 
 ```powershell
-Set-Content "$Ashen\Meitou.user.props" "<Project><PropertyGroup><RivalryCoreSource>$Mods</RivalryCoreSource></PropertyGroup></Project>"
+Set-Content "$Ashen\Meitou.user.props" "<Project><PropertyGroup><MeitouFrameworkSources>$Mods\RivalryCore\RivalryCore.csproj</MeitouFrameworkSources><MeitouEngineDir>$Mods\engine\</MeitouEngineDir></PropertyGroup></Project>"
 ```
 
 - Builds in `$Ashen` now compile Rivalry Core from `$Mods` and use the engine in `$Mods\engine`, and Play deploys that Rivalry Core build.
-- `Meitou.user.props` is git-ignored. If it already holds your Kenshi settings, add the `RivalryCoreSource` line inside its
-  `PropertyGroup` instead.
-- Logistics Core works the same way with `<LogisticsCoreSource>$Logistics</LogisticsCoreSource>`.
+- `Meitou.user.props` is git-ignored. If it already holds your Kenshi settings, add the two lines inside its `PropertyGroup` instead.
+- `MeitouFrameworkSources` takes framework project paths separated by `;`, e.g. `$Logistics\LogisticsCore\LogisticsCore.csproj`.
+  `MeitouEngineDir` names the engine the framework clone builds on.
 - Delete the line to go back to the locked ZIP.
 
 **Framework chains.** Bast Front's `meitou.lock.json` lists War Orchestration and Logistics Core. To change both frameworks and Bast Front
 together, override both in Bast Front:
 
 ```powershell
-Set-Content "$Bast\Meitou.user.props" "<Project><PropertyGroup><WarOrchestrationSource>$War</WarOrchestrationSource><LogisticsCoreSource>$Logistics</LogisticsCoreSource></PropertyGroup></Project>"
+Set-Content "$Bast\Meitou.user.props" "<Project><PropertyGroup><MeitouFrameworkSources>$War\WarOrchestration\WarOrchestration.csproj;$Logistics\LogisticsCore\LogisticsCore.csproj</MeitouFrameworkSources><MeitouEngineDir>$Bast\engine\</MeitouEngineDir></PropertyGroup></Project>"
 ```
 
-The override passes down, so War Orchestration builds against `$Logistics` too, and the whole build uses the engine in
-`$Logistics\engine`. Override only War Orchestration and it builds against the Logistics Core named in Bast Front's lock.
+The override passes down, so War Orchestration builds against `$Logistics` too, and the whole build uses one engine. Override only War Orchestration and it builds against the Logistics Core named in Bast Front's lock.
 
 To ship it: merge the framework PR into `beta` of `$Mods`, which publishes a prerelease `rivalry-core-<version>-beta.<commit>`. Then, in
 `$Ashen`, set `meitou.lock.json` to that tag and the asset, SHA-256 and engine commit from its release notes, and open the mod PR. In a

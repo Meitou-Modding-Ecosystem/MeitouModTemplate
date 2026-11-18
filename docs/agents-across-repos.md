@@ -47,8 +47,8 @@ and publishes its own, then the Bast Front PR locks both.
   when CI is green; link the previous PR.
 - A meitou.lock.json lists every framework in the chain (Bast Front locks War Orchestration AND Logistics Core), all on
   one engine commit, each accepted by the others' dependency ranges.
-- To build against unmerged framework changes, set <Framework>Source (RivalryCoreSource, LogisticsCoreSource,
-  WarOrchestrationSource) in the repo's git-ignored Meitou.user.props to the sibling clone. Never commit Meitou.user.props.
+- To build against unmerged framework changes, set MeitouFrameworkSources (the sibling clones' framework .csproj paths, ';'-separated)
+  and MeitouEngineDir in the repo's git-ignored Meitou.user.props. Never commit Meitou.user.props.
 - A lock points only at an immutable tag: <framework>-<version>-beta.<commit> or <framework>-v<version>, with the
   asset, SHA-256 and engine commit copied from that release's notes. Never the rolling <framework>-beta tag.
 - Never commit inside an engine/ submodule. Move an engine pin only to a commit merged on fork, and keep it equal to the

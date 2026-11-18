@@ -3,7 +3,7 @@
 Template for a [MeitouClient](https://github.com/Meitou-Modding-Ecosystem/MeitouClient) code mod repo in the Meitou-Modding-Ecosystem
 org. GPL-3.0-or-later.
 
-- Build and run in Visual Studio (launch profiles for this repo's engine or the installed launcher, deploy to the game): [docs/play.md](docs/play.md).
+- Build and run locally with Visual Studio, VS Code or the terminal (this repo's engine or the installed launcher, deployed to the game): [docs/play.md](docs/play.md).
 - Setting up the repos on your machine: [docs/local-development.md](docs/local-development.md).
 - Instructing agents on a change that spans repos: [docs/agents-across-repos.md](docs/agents-across-repos.md).
 
