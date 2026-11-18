@@ -15,7 +15,7 @@ framework, then mod. One agent session per change, not one per repo.
 | Change | Repo | PR into |
 | --- | --- | --- |
 | Engine hook (event, saved field, command) | MeitouClient | `fork` |
-| Rivalry Core API or behaviour | MeitouMods | `beta` |
+| Rivalry Core API or behaviour | RivalryCore | `beta` |
 | Logistics Core (nodes, edges, owners, stock, transports) | LogisticsCore | `beta` |
 | War Orchestration (combat scenarios on logistics, no story or characters) | WarOrchestration | `beta` |
 | Bast Front melee | BastFront | `beta` |
@@ -38,7 +38,7 @@ and publishes its own, then the Bast Front PR locks both.
 ## Rules to paste into the agent's instructions
 
 ```markdown
-- Repos and owners: engine hooks -> MeitouClient (PR into fork); Rivalry Core -> MeitouMods (beta);
+- Repos and owners: engine hooks -> MeitouClient (PR into fork); Rivalry Core -> RivalryCore (beta);
   Logistics Core -> LogisticsCore (beta); War Orchestration -> WarOrchestration (beta); Bast Front -> BastFront (beta);
   mods -> their own repo (beta); shared CI/packaging -> GutenStructure (beta).
 - Layers: logistics.core -> war.orchestration -> Bast Front. A layer uses the one above only through its public API and
@@ -62,8 +62,8 @@ and publishes its own, then the Bast Front PR locks both.
 
 ```text
 Change: <what the player should see>
-Repos: MeitouClient (<engine hook>), MeitouMods (<Rivalry Core change>), AshenHand (<mod change>)
-Order: engine -> MeitouMods -> AshenHand, each PR into its integration branch, self-merge when green.
+Repos: MeitouClient (<engine hook>), RivalryCore (<Rivalry Core change>), AshenHand (<mod change>)
+Order: engine -> RivalryCore -> AshenHand, each PR into its integration branch, self-merge when green.
 Build against unmerged changes with the local override; the final mod PR pins the published beta prerelease.
 Follow the cross-repo rules. Report each PR link in order.
 ```
