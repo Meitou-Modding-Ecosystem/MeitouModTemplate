@@ -6,6 +6,7 @@ org. GPL-3.0-or-later.
 - Build and run in Visual Studio (launch profiles for this repo's engine or the installed launcher, deploy to the game): [docs/play.md](docs/play.md).
 - Setting up the repos on your machine: [docs/local-development.md](docs/local-development.md).
 - Instructing agents on a change that spans repos: [docs/agents-across-repos.md](docs/agents-across-repos.md).
+- Checking a built mod against the newest Meitou release (CI does it on every PR): [docs/refcheck.md](docs/refcheck.md).
 
 ## Use this template
 
@@ -23,6 +24,7 @@ org. GPL-3.0-or-later.
 - `<Mod>/`: the mod's project and `meitou.json`. `<Mod>.Tests/`: its tests (synthetic worlds, no game install needed).
   `<Mod>.Data/` (optional): a generator that writes `<Mod>.mod` from the installed game.
 - `Play/`: one-click build, deploy and run.
+- `tools/`: `refcheck.sh` and `RefCheck/`, the engine-reference check ([docs/refcheck.md](docs/refcheck.md)).
 - `Directory.Build.props` imports the engine's, so mods build with the game's settings (warnings are errors).
 
 ## Branches
