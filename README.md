@@ -22,6 +22,9 @@ org. GPL-3.0-or-later.
   `git submodule update --init`.
 - `<Mod>/`: the mod's project and `meitou.json`. `<Mod>.Tests/`: its tests (synthetic worlds, no game install needed).
   `<Mod>.Data/` (optional): a generator that writes `<Mod>.mod` from the installed game.
+- `meitou.lock.json`: the framework releases the mods build against
+  ([framework lock](https://github.com/TheIvoryDisaster/GutenStructure/blob/beta/docs/framework-lock.md)); the Framework update workflow moves it
+  to new releases and merges when CI passes ([framework update](https://github.com/TheIvoryDisaster/GutenStructure/blob/beta/docs/framework-update.md)).
 - `Play/`: one-click build, deploy and run.
 - `Directory.Build.props` imports the engine's, so mods build with the game's settings (warnings are errors).
 
