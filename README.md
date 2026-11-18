@@ -3,7 +3,7 @@
 Template for a [MeitouClient](https://github.com/Meitou-Modding-Ecosystem/MeitouClient) code mod repo in the Meitou-Modding-Ecosystem
 org. GPL-3.0-or-later.
 
-- Build and run in Visual Studio (launch profiles for this repo's engine or the installed launcher, deploy to the game): [docs/play.md](docs/play.md).
+- Build and run locally with Visual Studio, VS Code or the terminal (this repo's engine or the installed launcher, deployed to the game): [docs/play.md](docs/play.md).
 - Setting up the repos on your machine: [docs/local-development.md](docs/local-development.md).
 - Instructing agents on a change that spans repos: [docs/agents-across-repos.md](docs/agents-across-repos.md).
 - Checking a built mod against the newest Meitou release (CI does it on every PR): [docs/refcheck.md](docs/refcheck.md).
@@ -15,6 +15,7 @@ org. GPL-3.0-or-later.
 2. Rename `ExampleMod` to your mod's name: the folders `ExampleMod` and `ExampleMod.Tests`, the files inside them named `ExampleMod*`, the
    `AssemblyName`/`RootNamespace` in both `.csproj` files, the namespaces, and the paths in `MeitouMod.slnx` (rename that file too).
 3. In `meitou.json` set `id` (`<author-or-mod>.<name>`), `assemblies` and `entry`; keep the version only there.
+   In `.github/workflows/release.yml` set the tag prefix, `mod-folder` and `slug` (`<mod-name>`, as in the tag `<mod-name>-v<version>`).
 4. Open the `.slnx` in Visual Studio and press F5 ([docs/play.md](docs/play.md)).
 
 ## Layout
@@ -23,6 +24,9 @@ org. GPL-3.0-or-later.
   `git submodule update --init`.
 - `<Mod>/`: the mod's project and `meitou.json`. `<Mod>.Tests/`: its tests (synthetic worlds, no game install needed).
   `<Mod>.Data/` (optional): a generator that writes `<Mod>.mod` from the installed game.
+- `meitou.lock.json`: the framework releases the mods build against
+  ([framework lock](https://github.com/TheIvoryDisaster/GutenStructure/blob/beta/docs/framework-lock.md)); the Framework update workflow moves it
+  to new releases and merges when CI passes ([framework update](https://github.com/TheIvoryDisaster/GutenStructure/blob/beta/docs/framework-update.md)).
 - `Play/`: one-click build, deploy and run.
 - `tools/`: `refcheck.sh` and `RefCheck/`, the engine-reference check ([docs/refcheck.md](docs/refcheck.md)).
 - `Directory.Build.props` imports the engine's, so mods build with the game's settings (warnings are errors).
@@ -30,4 +34,4 @@ org. GPL-3.0-or-later.
 ## Branches
 
 PRs into `beta`; CI (build and tests) must pass. `beta` is promoted to `main` once tested in play, and production goes through a PR to
-`release`.
+`release`. A tag `<slug>-v<version>` on `release` publishes the mod's zip (`.github/workflows/release.yml`).
