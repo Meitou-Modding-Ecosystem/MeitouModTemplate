@@ -46,10 +46,26 @@ jobs:
               test -f "$mods/$name/$file" || { echo "missing $mods/$name/$file"; ls -R "$mods"; exit 1; }
             done
           done
+  engine-references:
+    # Each mod as built only calls engine members the newest Meitou release still has (tools/refcheck.sh, docs/refcheck.md): a signature
+    # changed in a release compiles fine but fails at run time.
+    name: Engine references
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          submodules: recursive
+          persist-credentials: false
+      - uses: actions/setup-dotnet@26b0ec14cb23fa6904739307f278c14f94c95bf1 # v5
+        with:
+          dotnet-version: 11.0.x
+      - name: Check engine references against the newest Meitou release
+        run: tools/refcheck.sh
   release-readiness:
     name: Release readiness
     if: always()
-    needs: [build, play]
+    needs: [build, play, engine-references]
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:

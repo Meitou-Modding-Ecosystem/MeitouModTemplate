@@ -6,6 +6,7 @@ org. GPL-3.0-or-later.
 - Build and run locally with Visual Studio, VS Code or the terminal (this repo's engine or the installed launcher, deployed to the game): [docs/play.md](docs/play.md).
 - Setting up the repos on your machine: [docs/local-development.md](docs/local-development.md).
 - Instructing agents on a change that spans repos: [docs/agents-across-repos.md](docs/agents-across-repos.md).
+- Checking a built mod against the newest Meitou release (CI does it on every PR): [docs/refcheck.md](docs/refcheck.md).
 
 ## Use this template
 
@@ -27,6 +28,7 @@ org. GPL-3.0-or-later.
   ([framework lock](https://github.com/TheIvoryDisaster/GutenStructure/blob/beta/docs/framework-lock.md)); the Framework update workflow moves it
   to new releases and merges when CI passes ([framework update](https://github.com/TheIvoryDisaster/GutenStructure/blob/beta/docs/framework-update.md)).
 - `Play/`: one-click build, deploy and run.
+- `tools/`: `refcheck.sh` and `RefCheck/`, the engine-reference check ([docs/refcheck.md](docs/refcheck.md)).
 - `Directory.Build.props` imports the engine's, so mods build with the game's settings (warnings are errors).
 
 ## Branches
