@@ -83,7 +83,8 @@
   <!-- The locked frameworks' release folders, copied whole (assembly, symbols, manifest, .mod) beside the mods. -->
   <Target Name="PlayDeployFrameworks" AfterTargets="PlayDeploy" DependsOnTargets="MeitouResolveFrameworks" Condition="'$(PlayDeploy)' == 'true'">
     <ItemGroup>
-      <_PlayFrameworkFile Include="%(MeitouFrameworkFolder.FullPath)/**/*" ModName="%(MeitouFrameworkFolder.ModName)" />
+      <_PlayFrameworkFile Include="%(MeitouFrameworkFolder.FullPath)/**/*" ModName="%(MeitouFrameworkFolder.ModName)"
+                          Condition="'%(MeitouFrameworkFolder.FullPath)' != ''" />
     </ItemGroup>
     <Copy SourceFiles="@(_PlayFrameworkFile)" DestinationFiles="@(_PlayFrameworkFile->'$(KenshiModsDir)%(ModName)/%(RecursiveDir)%(Filename)%(Extension)')"
           SkipUnchangedFiles="true" Condition="'@(_PlayFrameworkFile)' != ''" />
