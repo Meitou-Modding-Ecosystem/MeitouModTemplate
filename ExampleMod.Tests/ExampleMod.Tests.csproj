@@ -20,7 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="../engine/src/Meitou.Game/Meitou.Game.csproj" />
+    <ProjectReference Include="$(MeitouEngineDir)src/Meitou.Game/Meitou.Game.csproj" />
     <ProjectReference Include="../ExampleMod/ExampleMod.csproj" />
   </ItemGroup>
 
