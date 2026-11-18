@@ -14,6 +14,7 @@ org. GPL-3.0-or-later.
 2. Rename `ExampleMod` to your mod's name: the folders `ExampleMod` and `ExampleMod.Tests`, the files inside them named `ExampleMod*`, the
    `AssemblyName`/`RootNamespace` in both `.csproj` files, the namespaces, and the paths in `MeitouMod.slnx` (rename that file too).
 3. In `meitou.json` set `id` (`<author-or-mod>.<name>`), `assemblies` and `entry`; keep the version only there.
+   In `.github/workflows/release.yml` set the tag prefix, `mod-folder` and `slug` (`<mod-name>`, as in the tag `<mod-name>-v<version>`).
 4. Open the `.slnx` in Visual Studio and press F5 ([docs/play.md](docs/play.md)).
 
 ## Layout
@@ -31,4 +32,4 @@ org. GPL-3.0-or-later.
 ## Branches
 
 PRs into `beta`; CI (build and tests) must pass. `beta` is promoted to `main` once tested in play, and production goes through a PR to
-`release`.
+`release`. A tag `<slug>-v<version>` on `release` publishes the mod's zip (`.github/workflows/release.yml`).
