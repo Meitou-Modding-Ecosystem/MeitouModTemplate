@@ -57,6 +57,8 @@ dotnet build Play
 - A mod with a data generator (`<Mod>.Data/<Mod>.Data.csproj`, run as `<generator> <Kenshi folder> <output .mod>`) gets its `<Mod>.mod`
   generated from the installed game; a failure is a build warning and the mod is deployed without it. Every other mod gets an empty
   `<Mod>.mod` when it has none; an existing one is never replaced.
+- A mod with a `Structures` folder gets its `.glb` models imported into its deployed folder, records merged into its `.mod`
+  ([structures.md](structures.md)).
 - When the mods folder doesn't exist, nothing is copied and the build says so.
 - The launcher's Play button starts the release it installed, not this repo's engine. Close it and run "Play (engine + mods)" to test your
   build.
