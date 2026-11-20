@@ -14,13 +14,13 @@ jobs:
   release-gate:
     permissions:
       contents: read
-    uses: TheIvoryDisaster/GutenStructure/.github/workflows/release-gate.yml@b61f1f282b7366f06915df81c5012330cdaf9fa3
+    uses: TheIvoryDisaster/GutenStructure/.github/workflows/release-gate.yml@d3e8fc332da625ed8dc092909120e9360be660c7
 
   release:
     needs: release-gate
     permissions:
       contents: write
-    uses: TheIvoryDisaster/GutenStructure/.github/workflows/package-meitou-mod.yml@b61f1f282b7366f06915df81c5012330cdaf9fa3
+    uses: TheIvoryDisaster/GutenStructure/.github/workflows/package-meitou-mod.yml@d3e8fc332da625ed8dc092909120e9360be660c7
     with:
       mod-folder: ExampleMod
       slug: example-mod
