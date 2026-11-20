@@ -37,7 +37,7 @@ public static class Importer
         foreach (string model in ModelFiles(models))
         {
             var block = new RecordIds(ids.BlockOf(Path.GetFileNameWithoutExtension(model)), modName + ".mod");
-            var (structureRecords, line) = ImportModel(model, assets, FilePrefix(modName, model), block);
+            var (structureRecords, line) = ImportNamed(model, assets, FilePrefix(modName, model), block);
             records.AddRange(structureRecords);
             log.Add(line);
         }
@@ -54,6 +54,21 @@ public static class Importer
         Directory.EnumerateFiles(folder)
             .Where(f => Path.GetExtension(f).ToLowerInvariant() is ".glb" or ".gltf")
             .Order(StringComparer.OrdinalIgnoreCase);
+
+    /// <summary>
+    /// <see cref="ImportModel"/>, a failure's message naming the model (a glTF reader's own messages don't).
+    /// </summary>
+    static (List<FcsRecord> Records, string Line) ImportNamed(string model, string assets, string prefix, RecordIds ids)
+    {
+        try
+        {
+            return ImportModel(model, assets, prefix, ids);
+        }
+        catch (Exception e) when (!e.Message.Contains(model, StringComparison.Ordinal))
+        {
+            throw new InvalidDataException($"{model}: {e.Message}", e);
+        }
+    }
 
     /// <summary>
     /// Imports one model: its files into <paramref name="assets"/> (named from <paramref name="prefix"/>), its records with ids from

@@ -41,8 +41,8 @@ All optional (`<model>.json`, comments allowed; an unknown name is an error so t
 | `placement` | `outdoor` | `outdoor`, `indoor` or `both` |
 | `createsTown` | `true` | placing it outside a town starts an outpost |
 | `collision` | `mesh` | `mesh` (a simplified copy of the model), `box` (its bounding box) or `none` (walk through it) |
-| `collisionTriangles` | `2000` | most triangles the `mesh` collision keeps |
-| `textureSize` | `2048` | largest texture side in pixels |
+| `collisionTriangles` | `2000` | most triangles the `mesh` collision keeps (12 to 50,000) |
+| `textureSize` | `2048` | largest texture side in pixels (a power of two, at most 8192) |
 
 ## Getting a good model
 

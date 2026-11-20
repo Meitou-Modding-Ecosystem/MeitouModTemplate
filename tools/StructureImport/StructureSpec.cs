@@ -86,6 +86,16 @@ public sealed class StructureSpec
     public int TextureSize { get; set; } = 2048;
 
     /// <summary>
+    /// The largest <see cref="TextureSize"/> (the game's own textures go to 4096).
+    /// </summary>
+    public const int MaxTextureSize = 8192;
+
+    /// <summary>
+    /// The largest <see cref="CollisionTriangles"/>: collision is for walking and placing, not looks.
+    /// </summary>
+    public const int MaxCollisionTriangles = 50_000;
+
+    /// <summary>
     /// The JSON options: camelCase names, comments and trailing commas allowed, unknown names refused (a typo would else go unnoticed).
     /// </summary>
     static readonly JsonSerializerOptions s_json = new()
@@ -121,13 +131,15 @@ public sealed class StructureSpec
     /// </summary>
     void Validate(string path)
     {
-        string? problem = Height is <= 0 ? "height must be above 0"
+        string? problem = Height is { } h && (!float.IsFinite(h) || h <= 0) ? "height must be a number above 0"
+            : !float.IsFinite(Sink) || !float.IsFinite(Yaw) ? "sink and yaw must be numbers"
             : Materials < 0 ? "materials must be 0 or more"
             : BuildSpeed <= 0 ? "buildSpeed must be above 0"
             : Placement is not ("outdoor" or "indoor" or "both") ? "placement must be outdoor, indoor or both"
             : Collision is not ("mesh" or "box" or "none") ? "collision must be mesh, box or none"
-            : CollisionTriangles < 12 ? "collisionTriangles must be 12 or more"
-            : TextureSize < 4 || (TextureSize & (TextureSize - 1)) != 0 ? "textureSize must be a power of two, 4 or more"
+            : CollisionTriangles is < 12 or > MaxCollisionTriangles ? $"collisionTriangles must be 12 to {MaxCollisionTriangles}"
+            : TextureSize is < 4 or > MaxTextureSize || (TextureSize & (TextureSize - 1)) != 0
+                ? $"textureSize must be a power of two from 4 to {MaxTextureSize}"
             : string.IsNullOrWhiteSpace(Research) ? "research must be start, none or a RESEARCH string id"
             : null;
         if (problem is not null) throw new InvalidDataException($"{path}: {problem}");
