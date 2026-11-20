@@ -68,7 +68,9 @@ public static class ModFileMerger
         && r.Strings.Count == 0 && r.Filenames.Count == 0 && r.References.Count == 0 && r.Instances.Count == 0;
 
     /// <summary>
-    /// Numbers the records 1, 2, ... in file order and sets the file's next id after them.
+    /// Numbers the records 1, 2, ... in file order and sets the file's next id after them. This renumbers a generator's records too, which is
+    /// harmless: the game keys records by string id, and the numeric id only builds string ids in files older than format 7 (engine
+    /// docs/formats/fcs-mod.md).
     /// </summary>
     static void Renumber(FcsFile file)
     {

@@ -19,8 +19,9 @@ try
     foreach (string line in Importer.ImportFolder(args[0], args[1])) Console.WriteLine($"Structure {line}");
     return 0;
 }
-catch (Exception e) when (e is InvalidDataException or IOException or System.Text.Json.JsonException or InvalidOperationException)
+catch (Exception e)
 {
+    // One line for any failure (a bad setting, an invalid or unreadable model): the build log shows it and the build fails.
     Console.Error.WriteLine($"Structure import failed: {e.Message}");
     return 1;
 }
