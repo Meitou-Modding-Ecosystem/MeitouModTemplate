@@ -34,6 +34,10 @@ org. GPL-3.0-or-later.
 - `tools/`: `refcheck.sh` and `RefCheck/`, the engine-reference check ([docs/refcheck.md](docs/refcheck.md)); `StructureImport/`, the
   model import ([docs/structures.md](docs/structures.md)).
 - `Directory.Build.props` imports the engine's, so mods build with the game's settings (warnings are errors).
+- `Directory.Build.rsp` stamps the engine references as the oldest Meitou release the mods support, equal to each `gameVersion` floor: the
+  game refuses a mod referencing a newer engine stamp, and the submodule builds `1.0.0.0`
+  ([versioning](https://github.com/TheIvoryDisaster/GutenStructure/blob/beta/docs/versioning.md)). The Meitou compatibility workflow checks the
+  mods daily against new Meitou releases ([meitou compat](https://github.com/TheIvoryDisaster/GutenStructure/blob/beta/docs/meitou-compat.md)).
 
 ## Branches
 
