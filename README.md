@@ -22,8 +22,9 @@ org. GPL-3.0-or-later.
 
 ## Layout
 
-- `engine/`: MeitouClient as a git submodule, pinned to the engine commit the mod builds against. After a pull that moves it:
-  `git submodule update --init`.
+- `engine/`: MeitouClient as a git submodule, pinned to the engine commit the mod builds against. `git pull` does not move it: after
+  every pull run `powershell -ExecutionPolicy Bypass -File tools\Update-Local.ps1 -Clean -Build`
+  ([keep clones current](docs/local-development.md#keep-clones-current)).
 - `<Mod>/`: the mod's project and `meitou.json`. `<Mod>.Tests/`: its tests (synthetic worlds, no game install needed).
   `<Mod>.Data/` (optional): a generator that writes `<Mod>.mod` from the installed game. `<Mod>/Structures/` (optional): `.glb` models
   imported as buildable structures on deploy ([docs/structures.md](docs/structures.md)).
@@ -31,8 +32,8 @@ org. GPL-3.0-or-later.
   ([framework lock](https://github.com/TheIvoryDisaster/GutenStructure/blob/beta/docs/framework-lock.md)); the Framework update workflow moves it
   to new releases and merges when CI passes ([framework update](https://github.com/TheIvoryDisaster/GutenStructure/blob/beta/docs/framework-update.md)).
 - `Play/`: one-click build, deploy and run.
-- `tools/`: `refcheck.sh` and `RefCheck/`, the engine-reference check ([docs/refcheck.md](docs/refcheck.md)); `StructureImport/`, the
-  model import ([docs/structures.md](docs/structures.md)).
+- `tools/`: `Update-Local.ps1`, the local pull and engine-pin check ([keep clones current](docs/local-development.md#keep-clones-current));
+  `refcheck.sh` and `RefCheck/`, the engine-reference check ([docs/refcheck.md](docs/refcheck.md)); `StructureImport/`, the model import ([docs/structures.md](docs/structures.md)).
 - `Directory.Build.props` imports the engine's, so mods build with the game's settings (warnings are errors).
 - `Directory.Build.rsp` stamps the engine references as the oldest Meitou release the mods support, equal to each `gameVersion` floor: the
   game refuses a mod referencing a newer engine stamp, and the submodule builds `1.0.0.0`
