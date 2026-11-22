@@ -27,6 +27,11 @@ All three need the .NET 11 SDK and a clone with its submodules (`git clone --rec
 
 Terminal > Run Build Task (Ctrl+Shift+B) only builds and deploys.
 
+## Without an editor
+
+Right-click `tools\Build.ps1` > **Run with PowerShell**. It builds and deploys like `dotnet build` (checking out the submodules first if
+they are missing) and keeps the window open so you can read the result. `-Test` also runs the tests; `-Run` then starts the engine.
+
 ## Terminal
 
 In the repo's root folder:
