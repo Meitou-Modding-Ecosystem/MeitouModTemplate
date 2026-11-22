@@ -18,6 +18,7 @@ jobs:
       contents: write
       pull-requests: write
       actions: write
-    uses: TheIvoryDisaster/GutenStructure/.github/workflows/framework-update.yml@7bbd01b87f8980f40af7c7f832bc2f038f7ab56d
+    uses: TheIvoryDisaster/GutenStructure/.github/workflows/framework-update.yml@196e194f2b8a3934fa81d99a1ab0b20211eba807
     with:
+      tools-ref: 196e194f2b8a3934fa81d99a1ab0b20211eba807
       channel: beta
