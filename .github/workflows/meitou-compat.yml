@@ -18,6 +18,6 @@ jobs:
       issues: write
       pull-requests: write
       actions: write
-    uses: TheIvoryDisaster/GutenStructure/.github/workflows/meitou-compat.yml@e353dd468f4c250daebf615975ec4bbd6a28283d
+    uses: TheIvoryDisaster/GutenStructure/.github/workflows/meitou-compat.yml@1b00521d4c4d083443cb711df53eba9e4e043964
     with:
-      tools-ref: e353dd468f4c250daebf615975ec4bbd6a28283d
+      tools-ref: 1b00521d4c4d083443cb711df53eba9e4e043964
