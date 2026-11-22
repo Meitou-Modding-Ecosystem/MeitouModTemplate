@@ -1,0 +1,6 @@
+# Meitou's releases stamp their assemblies with the game's version (MeitouClient 0.22.1.0, ...), but the engine submodule builds as
+# 1.0.0.0. .NET never binds a reference to 1.0.0.0 to a lower version, so without this line a mod built here does not load in any
+# released game: Meitou logs "not loaded: entry type ... is not in its assemblies". Every dotnet build / test / publish in this repo
+# (CI and the release workflow included) stamps the engine as the oldest Meitou the mod supports instead, so the mod's references bind
+# to that release and every newer one. Keep it at the floor of your meitou.json's "gameVersion" (">=0.21.0" -> 0.21.0.0).
+-p:AssemblyVersion=0.20.1.0
