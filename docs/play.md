@@ -4,7 +4,7 @@ Building `Play` builds the engine and every mod in this repo, copies the mods an
 folder, and then starts the game. Use whichever tool you like: Visual Studio, VS Code or a terminal all run the same build.
 
 All three need the .NET 11 SDK and a clone with its submodules (`git clone --recurse-submodules <repo URL>`, or
-`git submodule update --init --recursive` in an existing clone).
+`git submodule update --init --recursive` in an existing clone). Without them the build stops with `MEITOU001`, naming that command.
 
 ## Visual Studio
 
