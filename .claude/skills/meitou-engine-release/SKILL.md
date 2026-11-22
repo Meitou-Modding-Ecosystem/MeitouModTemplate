@@ -61,5 +61,10 @@ framework-update PR and fix the red ones there.
 1. In a PR into `beta`: bump `version` in each changed mod's `meitou.json`, and check `gameVersion` and `apiVersion` (`CLAUDE.md`,
    Versioning).
 2. Only when the owner asks: open the promotion PRs `beta` -> `main` -> `release` (each needs a super-maintainer's approval).
-3. Only when the owner asks, once `release` holds the change: push the tag `<slug>-v<version>` on the `release` head. `release.yml` builds
-   `<Mod>-<version>.zip`; the version must match `meitou.json`.
+3. Only when the owner asks, once `release` holds the change: push the tag `<slug>-v<version>` on the `release` head with
+   `powershell -ExecutionPolicy Bypass -File tools\Tag-Release.ps1` (`-DryRun` prints the git commands; `-Slug` picks one of several mods).
+   `release.yml` builds `<Mod>-<version>.zip`; the version must match `meitou.json`.
+   - The script runs on a machine that can push tags: the owner's clone, or a Remote Control session there. A cloud session's git proxy
+     refuses tag pushes (HTTP 403): there, give the owner the commands, ready to paste, and say plainly that they run them.
+   - After the push, check that the `Release` run for the tag (Actions, `release.yml`) succeeded and the release lists the zip. Without a
+     run, the tag never reached GitHub.
