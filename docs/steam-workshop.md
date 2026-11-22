@@ -17,10 +17,9 @@ $Watcher = "$env:LOCALAPPDATA\WorkshopWatcher\WorkshopWatcher.ps1"
 ## 1. Release the mod
 
 1. Merge `beta` into `main`, then open and merge a PR from `main` into `release` ([Branches](../README.md#branches)).
-2. Push the tag `<slug>-v<version>` on `release`, with the version in `meitou.json`, for example `example-mod-v0.1.0`:
-   `powershell -ExecutionPolicy Bypass -File tools\Tag-Release.ps1` works both out, prints the git commands and pushes the tag
-   (`-DryRun` only prints them).
-3. Wait for the Release workflow. The release it creates has `<Mod>-<version>.zip` and `<Mod>-<version>.zip.sha256`.
+2. Wait for the Release workflow on `release`. It tags the merge `<slug>-v<version>` with the version in `meitou.json` (for example
+   `example-mod-v0.1.0`) and creates a release with `<Mod>-<version>.zip` and `<Mod>-<version>.zip.sha256`. If that run fails before
+   tagging, `powershell -ExecutionPolicy Bypass -File tools\Tag-Release.ps1` pushes the tag by hand (`-DryRun` only prints the commands).
 
 ## 2. Install Workshop Watcher and sign in to Steam
 

@@ -45,6 +45,7 @@ org. GPL-3.0-or-later.
 ## Branches
 
 PRs into `beta`; CI (build and tests) must pass. `beta` is promoted to `main` once tested in play, and production goes through a PR to
-`release`. A tag `<slug>-v<version>` on `release` publishes the mod's zip (`.github/workflows/release.yml`); `tools\Tag-Release.ps1` pushes it.
+`release`. Each merge into `release` tags it `<slug>-v<version>` and publishes the mod's zip (`.github/workflows/release.yml`) unless that
+tag exists; `tools\Tag-Release.ps1` is the manual fallback.
 
 - New-repository branch protections and permanent beta/main/release reviews: [docs/branch-policy.md](docs/branch-policy.md). Templates copy source; GutenStructure applies settings through reconciliation.
