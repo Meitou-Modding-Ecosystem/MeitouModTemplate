@@ -10,7 +10,8 @@ org. GPL-3.0-or-later.
   `.claude/skills/meitou-engine-release`.
 - Checking a built mod against the newest Meitou release (CI does it on every PR): [docs/refcheck.md](docs/refcheck.md).
 - Publishing the mod to the Steam Workshop for the first time, then on every release: [docs/steam-workshop.md](docs/steam-workshop.md).
-- Turning `.glb` models (Meshy, Hi3D, Blender) into buildable structures, no FCS needed: [docs/structures.md](docs/structures.md).
+- Turning `.glb` models (Meshy, Hi3D, Blender) into buildable structures, no FCS needed: [docs/structures.md](docs/structures.md);
+  getting a generated model's polycount, size and textures right first: [docs/model-prep.md](docs/model-prep.md).
 
 ## Use this template
 
@@ -46,7 +47,8 @@ the list against the block. Replace this paragraph with the mod's block line, e.
   to new releases and merges when CI passes ([framework update](https://github.com/TheIvoryDisaster/GutenStructure/blob/beta/docs/framework-update.md)).
 - `Play/`: one-click build, deploy and run.
 - `tools/`: `Update-Local.ps1`, the local pull and engine-pin check ([keep clones current](docs/local-development.md#keep-clones-current));
-  `refcheck.sh` and `RefCheck/`, the engine-reference check ([docs/refcheck.md](docs/refcheck.md)); `StructureImport/`, the model import ([docs/structures.md](docs/structures.md)).
+  `refcheck.sh` and `RefCheck/`, the engine-reference check ([docs/refcheck.md](docs/refcheck.md)); `StructureImport/`, the model import ([docs/structures.md](docs/structures.md)); `model-info.py` and `prepare-model.py`,
+  model checks and texture shrinking ([docs/model-prep.md](docs/model-prep.md)).
 - `Directory.Build.props` imports the engine's, so mods build with the game's settings (warnings are errors).
 - `Directory.Build.rsp` stamps the engine references as the oldest Meitou release the mods support, equal to each `gameVersion` floor: the
   game refuses a mod referencing a newer engine stamp, and the submodule builds `1.0.0.0`
