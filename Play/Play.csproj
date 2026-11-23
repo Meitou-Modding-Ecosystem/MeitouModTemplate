@@ -116,13 +116,13 @@
   </Target>
 
   <!--
-    A mod with a Structures folder gets its models imported into its deployed folder (docs/structures.md): meshes, textures and collision under
-    structures/, the records merged into its .mod. Runs after the generator, which rewrites the .mod; a failure fails the build.
+    A mod with a Structures or ItemModels folder gets its models imported into its deployed folder (docs/structures.md): meshes, textures and
+    collision under structures/, the records merged into its .mod. Runs after the generator, which rewrites the .mod; a failure fails the build.
   -->
   <Target Name="PlayImportStructures" AfterTargets="PlayGenerateData;PlayEmptyMods" DependsOnTargets="PlayFindMods" Condition="'$(PlayDeploy)' == 'true'">
     <ItemGroup>
       <_PlayStructures Include="@(PlayMod->'%(RootDir)%(Directory)Structures')" />
-      <_PlayStructures Remove="@(_PlayStructures)" Condition="!Exists('%(Identity)')" />
+      <_PlayStructures Remove="@(_PlayStructures)" Condition="!Exists('%(Identity)') and !Exists('%(RootDir)%(Directory)ItemModels')" />
     </ItemGroup>
     <MSBuild Projects="../tools/StructureImport/StructureImport.csproj" Targets="GetTargetPath" Condition="'@(_PlayStructures)' != ''">
       <Output TaskParameter="TargetOutputs" PropertyName="_PlayStructureImport" />
