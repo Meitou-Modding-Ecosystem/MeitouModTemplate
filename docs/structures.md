@@ -77,7 +77,7 @@ with the names to use.
 ## Getting a good model
 
 - Ask Meshy or Hi3D for a PBR-textured model and download it as GLB. A few tens of thousands of triangles is plenty; the log flags a model
-  over 150,000.
+  over 150,000. Cutting the polycount, choosing the size and shrinking textures: [model-prep.md](model-prep.md).
 - Front of the model faces +Z in the file (glTF's convention); use `yaw` to turn it.
 - Each material becomes its own part. Generators usually give one; at most 49.
 - The model stands on its lowest point, centred.
