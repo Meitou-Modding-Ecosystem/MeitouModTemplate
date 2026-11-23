@@ -51,6 +51,21 @@ public static class MeshMath
     }
 
     /// <summary>
+    /// The scale from model units (metres) to game units: <paramref name="size"/> metres along the longest side when given, else the model's own
+    /// size.
+    /// </summary>
+    public static float ScaleLongest(IReadOnlyList<SurfaceMesh> meshes, float? size)
+    {
+        var (min, max) = Bounds(meshes);
+        var extent = max - min;
+        float longest = MathF.Max(extent.X, MathF.Max(extent.Y, extent.Z));
+        if (size is null) return UnitsPerMetre;
+        if (longest <= 0) throw new InvalidDataException("The model has no size to scale to.");
+
+        return size.Value * UnitsPerMetre / longest;
+    }
+
+    /// <summary>
     /// Moves every mesh into the building's space: turned <paramref name="yawDegrees"/> about Y, scaled by <paramref name="scale"/>, centred on
     /// X and Z, its lowest point <paramref name="sinkUnits"/> below the ground (y = 0, where the game places a building's origin).
     /// </summary>

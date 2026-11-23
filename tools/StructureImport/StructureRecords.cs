@@ -179,6 +179,21 @@ public static class StructureRecords
     }
 
     /// <summary>
+    /// An item model's MATERIAL_SPECS_CLOTHING, the material an ITEM's <c>material</c> list names for its mesh on the ground, in hand and in its
+    /// icon (engine docs/formats/runtime-materials.md "Callers"): diffuse and normal map; a cut-out material is <c>material type</c> 1 (ALPHA: the
+    /// normal map's alpha), else 0 (DEFAULT). Metalness has no field here.
+    /// </summary>
+    public static FcsRecord ItemMaterial(string id, string name, PartFiles files)
+    {
+        var r = New(id, FcsRecordType.MaterialSpecsClothing, name);
+        r.Filenames["normal map"] = files.Normal;
+        r.Filenames["texture map"] = files.Diffuse;
+        r.Floats["specular mult"] = 1;
+        r.Ints["material type"] = files.AlphaThreshold is null ? 0 : 1;
+        return r;
+    }
+
+    /// <summary>
     /// A new record of the mod.
     /// </summary>
     static FcsRecord New(string id, FcsRecordType type, string name) => new() { StringId = id, Flags = NewFlags, Name = name, RecordType = type };

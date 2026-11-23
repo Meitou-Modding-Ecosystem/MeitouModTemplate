@@ -44,6 +44,36 @@ All optional (`<model>.json`, comments allowed; an unknown name is an error so t
 | `collisionTriangles` | `2000` | most triangles the `mesh` collision keeps (12 to 50,000) |
 | `textureSize` | `2048` | largest texture side in pixels (a power of two, at most 8192) |
 
+## Item models
+
+Put an item's model in `<Mod>/ItemModels/` instead (`Structures` would make it a building). The import writes its mesh and textures beside the
+structures' and one MATERIAL_SPECS_CLOTHING record; your mod's ITEM record then points at them. The build log shows one `Item ...` line per model
+with the names to use.
+
+1. `MyMod/ItemModels/lantern.glb`, optionally `lantern.json`: `{ "size": 0.3 }`.
+2. In your item record (data generator or data phase), set:
+
+   | Field | Value |
+   | --- | --- |
+   | `mesh` and `ground mesh` (filenames) | `<mod>_<model>.mesh`, e.g. `mymod_lantern.mesh` |
+   | `material` (reference) | `<950000 + 100 × block>-<Mod>.mod`, block from `ItemModels/ids.json`, e.g. `950000-MyMod.mod` |
+
+   Look the material up first (`GameDatabase.Find`) and keep the stand-in's look when it is missing: a released zip, and tests that read the game
+   without the deployed mod, don't have it.
+3. Commit the model, its `.json` and `ItemModels/ids.json`.
+
+| Setting | Default | Meaning |
+| --- | --- | --- |
+| `name` | file name, `-`/`_` as spaces | the material record's name |
+| `size` | model's own size | longest side in metres; the model is scaled evenly to it |
+| `yaw` | `0` | degrees turned about the vertical axis |
+| `textureSize` | `1024` | largest texture side in pixels (a power of two, at most 8192) |
+
+- One material per item model (the ITEM names one `material`); the model stands on its lowest point, centred, as the game's item meshes do.
+- The game draws an item on the ground, in a hand and in an auto icon with its `mesh` (`ground mesh` first on the ground) and the
+  MATERIAL_SPECS_CLOTHING its `material` names (engine `docs/formats/runtime-materials.md` "Callers", `WorldObjectLayout.ItemMesh`).
+- The inventory icon is drawn from the model unless the record sets `auto icon image` false and its own `icon`.
+
 ## Getting a good model
 
 - Ask Meshy or Hi3D for a PBR-textured model and download it as GLB. A few tens of thousands of triangles is plenty; the log flags a model
@@ -60,13 +90,15 @@ Into the deployed mod folder (`<Kenshi>/mods/<Mod>/`):
   tangent with handedness in w, the layout of the game's own building meshes.
 - `structures/<mod>_<model>_d.dds`, `_n.dds`, `_m.dds`: diffuse (BC3), normal (BC1, BC3 when cut out), metalness (BC1), with mips.
 - `structures/<mod>_<model>_col.xml`: the collision.
+- For an item model: `structures/<mod>_<model>.mesh` and its textures, no collision.
 - Records merged into `<Mod>.mod` beside anything else in it (a data generator's records are kept; an earlier import's are replaced): a
-  BUILDING, one BUILDING_PART and MATERIAL_SPEC per material, and the unlock (the research's `enable buildings` gains the building).
+  BUILDING, one BUILDING_PART and MATERIAL_SPEC per material, and the unlock (the research's `enable buildings` gains the building); one
+  MATERIAL_SPECS_CLOTHING per item model.
 
 File names start with the mod's name because the game looks resources up by bare file name across every mod.
 
-Record ids are `<n>-<Mod>.mod` with n from 900000 up, a block of 100 per model (building +0, parts +1, materials +50). `Structures/ids.json`
-keeps each model's block so the ids never change: a save names a placed building by its record's id. Never edit or remove a block; removing a
+Record ids are `<n>-<Mod>.mod` with n from 900000 up, a block of 100 per model (building +0, parts +1, materials +50); item models count from
+950000 (material +0) in `ItemModels/ids.json`. `Structures/ids.json` keeps each model's block so the ids never change: a save names a placed building by its record's id. Never edit or remove a block; removing a
 model removes its building from games that placed it.
 
 ## Facts the import relies on
