@@ -19,8 +19,19 @@ org. GPL-3.0-or-later.
 2. Rename `ExampleMod` to your mod's name: the folders `ExampleMod` and `ExampleMod.Tests`, the files inside them named `ExampleMod*`, the
    `AssemblyName`/`RootNamespace` in both `.csproj` files, the namespaces, and the paths in `MeitouMod.slnx` (rename that file too).
 3. In `meitou.json` set `id` (`<author-or-mod>.<name>`), `assemblies` and `entry`; keep the version only there.
+   Ask for a number block if the mod will claim task types or dialogue codes, and fill in `## Numbers` below.
    In `.github/workflows/release.yml` set the tag prefix, `mod-folder` and `slug` (`<mod-name>`, as in the tag `<mod-name>-v<version>`).
 4. Open the `.slnx` in Visual Studio and press F5 ([docs/play.md](docs/play.md)).
+
+## Numbers
+
+Task types (`AddGoalType`, `AddJobType`) and dialogue codes (`AddDialogueCondition`, `AddDialogueEffect`) are shared by every loaded mod, and the
+game refuses a mod that claims one already taken. Each mod claims numbers only inside its own block of 100
+([mod number blocks](https://github.com/TheIvoryDisaster/GutenStructure/blob/beta/docs/numbers.md)) and lists them here; `NumbersTests` checks
+the list against the block. Replace this paragraph with the mod's block line, e.g. `Block 4400-4499`, and a table:
+
+| Number | Pool | Use |
+| --- | --- | --- |
 
 ## Layout
 
