@@ -22,7 +22,7 @@ jobs:
     needs: release-gate
     permissions:
       contents: write
-    uses: TheIvoryDisaster/GutenStructure/.github/workflows/package-meitou-mod.yml@5b080fca9aef988e032f4ea89b7fb9bdc72db3de
+    uses: TheIvoryDisaster/GutenStructure/.github/workflows/package-meitou-mod.yml@18f67b9121d10d27530bb45916e338f4e159eaa1
     with:
       mod-folder: ExampleMod
       slug: example-mod

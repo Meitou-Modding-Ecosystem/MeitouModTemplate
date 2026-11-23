@@ -125,5 +125,4 @@ Checked against the game's files (Kenshi 1.0.68 data) and with the engine's read
 
 ## Not covered yet
 
-Interiors, doors, functions (storage, beds, crafting) and turning parts. The release zip (`release.yml`) does not run the import yet, so a
-released mod ships without its structures until the packaging workflow learns it.
+Interiors, doors, functions (storage, beds, crafting) and turning parts.
