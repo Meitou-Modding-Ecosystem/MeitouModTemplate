@@ -61,4 +61,6 @@ PRs into `beta`; CI (build and tests) must pass. `beta` is promoted to `main` on
 `release`. Each merge into `release` tags it `<slug>-v<version>` and publishes the mod's zip (`.github/workflows/release.yml`) unless that
 tag exists; `tools\Tag-Release.ps1` is the manual fallback.
 
+- A new repo gets only `beta` from the template; its first push runs `.github/workflows/branches.yml`, which creates `main` and `release`
+  from `beta` (without publishing anything). Run it by hand (Actions > Permanent branches) if a branch is ever missing.
 - New-repository branch protections and permanent beta/main/release reviews: [docs/branch-policy.md](docs/branch-policy.md). Templates copy source; GutenStructure applies settings through reconciliation.
