@@ -39,6 +39,8 @@
     <ProjectReference Include="$(MeitouEngineDir)src/Meitou.Data/Meitou.Data.csproj" />
     <ProjectReference Include="$(MeitouEngineDir)src/Meitou.Game/Meitou.Game.csproj" ReferenceOutputAssembly="false" Private="false"
                       AdditionalProperties="Configuration=$(PlayConfiguration)" />
+    <!-- The structure import (docs/structures.md), run on each mod's Structures folder after the mod is deployed. -->
+    <ProjectReference Include="../tools/StructureImport/StructureImport.csproj" ReferenceOutputAssembly="false" Private="false" />
   </ItemGroup>
 
   <!--
@@ -111,6 +113,22 @@
     </ItemGroup>
     <Exec ContinueOnError="true"
           Command="&quot;$(PlayDotnet)&quot; &quot;%(_PlayGeneratorDll.FullPath)&quot; &quot;$(KenshiDir)&quot; &quot;$(KenshiModsDir)%(_PlayGeneratorDll.ModName)/%(_PlayGeneratorDll.ModName).mod&quot;" />
+  </Target>
+
+  <!--
+    A mod with a Structures or ItemModels folder gets its models imported into its deployed folder (docs/structures.md): meshes, textures and
+    collision under structures/, the records merged into its .mod. Runs after the generator, which rewrites the .mod; a failure fails the build.
+  -->
+  <Target Name="PlayImportStructures" AfterTargets="PlayGenerateData;PlayEmptyMods" DependsOnTargets="PlayFindMods" Condition="'$(PlayDeploy)' == 'true'">
+    <ItemGroup>
+      <_PlayStructures Include="@(PlayMod->'%(RootDir)%(Directory)Structures')" />
+      <_PlayStructures Remove="@(_PlayStructures)" Condition="!Exists('%(Identity)') and !Exists('%(RootDir)%(Directory)ItemModels')" />
+    </ItemGroup>
+    <MSBuild Projects="../tools/StructureImport/StructureImport.csproj" Targets="GetTargetPath" Condition="'@(_PlayStructures)' != ''">
+      <Output TaskParameter="TargetOutputs" PropertyName="_PlayStructureImport" />
+    </MSBuild>
+    <Exec Condition="'@(_PlayStructures)' != ''"
+          Command="&quot;$(PlayDotnet)&quot; &quot;$(_PlayStructureImport)&quot; &quot;%(_PlayStructures.Identity)&quot; &quot;$(KenshiModsDir)%(_PlayStructures.ModName)&quot;" />
   </Target>
 
   <!-- Every mod without a generator gets an empty .mod (the game needs one per mod folder), never replacing one that is there. -->

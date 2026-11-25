@@ -4,7 +4,7 @@ Building `Play` builds the engine and every mod in this repo, copies the mods an
 folder, and then starts the game. Use whichever tool you like: Visual Studio, VS Code or a terminal all run the same build.
 
 All three need the .NET 11 SDK and a clone with its submodules (`git clone --recurse-submodules <repo URL>`, or
-`git submodule update --init --recursive` in an existing clone).
+`git submodule update --init --recursive` in an existing clone). Without them the build stops with `MEITOU001`, naming that command.
 
 ## Visual Studio
 
@@ -26,6 +26,11 @@ All three need the .NET 11 SDK and a clone with its submodules (`git clone --rec
 4. For the installed launcher: Terminal > Run Task > **Meitou launcher (installed)**. It builds and deploys, then opens the launcher.
 
 Terminal > Run Build Task (Ctrl+Shift+B) only builds and deploys.
+
+## Without an editor
+
+Right-click `tools\Build.ps1` > **Run with PowerShell**. It builds and deploys like `dotnet build` (checking out the submodules first if
+they are missing) and keeps the window open so you can read the result. `-Test` also runs the tests; `-Run` then starts the engine.
 
 ## Terminal
 
@@ -57,6 +62,8 @@ dotnet build Play
 - A mod with a data generator (`<Mod>.Data/<Mod>.Data.csproj`, run as `<generator> <Kenshi folder> <output .mod>`) gets its `<Mod>.mod`
   generated from the installed game; a failure is a build warning and the mod is deployed without it. Every other mod gets an empty
   `<Mod>.mod` when it has none; an existing one is never replaced.
+- A mod with a `Structures` folder gets its `.glb` models imported into its deployed folder, records merged into its `.mod`
+  ([structures.md](structures.md)).
 - When the mods folder doesn't exist, nothing is copied and the build says so.
 - The launcher's Play button starts the release it installed, not this repo's engine. Close it and run "Play (engine + mods)" to test your
   build.
